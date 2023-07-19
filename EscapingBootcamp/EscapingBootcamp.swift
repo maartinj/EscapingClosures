@@ -12,16 +12,17 @@ class EscapingViewModel: ObservableObject {
     @Published var text: String = "Hello"
     
     func getData() {
-        let newData = downloadData()
-        text = newData
+        downloadData2 { (returnedData) in
+            text = returnedData
+        }
     }
     
     func downloadData() -> String {
         return "New data!"
     }
     
-    func downloadData2() -> String {
-        return "New data!"
+    func downloadData2(completionHandler: (_ data: String) -> Void) {
+        completionHandler("New data!")
     }
 }
 
