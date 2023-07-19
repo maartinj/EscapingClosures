@@ -12,8 +12,8 @@ class EscapingViewModel: ObservableObject {
     @Published var text: String = "Hello"
     
     func getData() {
-        downloadData2 { (returnedData) in
-            text = returnedData
+        downloadData3 { [weak self] (returnedData) in
+            self?.text = returnedData
         }
     }
     
@@ -23,6 +23,12 @@ class EscapingViewModel: ObservableObject {
     
     func downloadData2(completionHandler: (_ data: String) -> Void) {
         completionHandler("New data!")
+    }
+    
+    func downloadData3(completionHandler: @escaping (_ data: String) -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            completionHandler("New data!")
+        }
     }
 }
 
